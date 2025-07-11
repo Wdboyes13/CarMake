@@ -36,7 +36,7 @@ void buildvarparse(toml_result_t result, CM_Build* config){
     if (cflags.type == TOML_STRING) {config->BuildInfo.cflags = (char*)cflags.u.s;} 
     else {config->BuildInfo.cflags = ""; };
 
-    if (compiler.type == TOML_ARRAY) FillFlexArray(includes, BuildInfo.includes);
+    if (includes.type == TOML_ARRAY) FillFlexArray(includes, BuildInfo.includes);
     if (libdirs.type == TOML_ARRAY)  FillFlexArray(libdirs, BuildInfo.ldirs);
     if (libs.type == TOML_ARRAY)     FillFlexArray(libs, BuildInfo.libs);
 
