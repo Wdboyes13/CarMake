@@ -29,4 +29,5 @@ __[Short License](/Fileheader.txt)__
 __[libtomlc17 License](/libsrcs/tomlc17/LICENSE)__  
 
 ## To Use  
-If you wan't to use this in your own projects, check out [tests](/tests)  
+If you wan't to use `cm` in your own projects, check out [tests](/tests) until I document it  
+To use `cmpkg` do `cmpkg [packagename]`

@@ -1,0 +1,10 @@
+Format: name - pkgname
+
+Curl / Libcurl - libcurl
+Libevent       - libevent 
+Libiconv       - libiconv
+Libmicrohttpd  - libmicrohttpd 
+Lua / Liblua   - lua 
+OpenSSL        - openssl 
+SDL2           - SDL2 
+ZStandard      - zstd
