@@ -1,5 +1,4 @@
 #include "Common.h"
-#include <zstd.h>
 
 #define CHUNK_SIZE 16384
 

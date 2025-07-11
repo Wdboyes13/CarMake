@@ -2,13 +2,13 @@ OUT = cmpkg
 CC ?= wclang
 
 CFLAGS += 
-CPPFLAGS += $(shell pkg-config --cflags lua) $(shell pkg-config --cflags libzstd) 
-LDFLAGS += $(shell pkg-config --libs-only-L lua) $(shell pkg-config --libs-only-L libzstd) 
-LDLIBS += $(shell pkg-config --libs-only-l lua) $(shell pkg-config --libs-only-l libzstd) 
+CPPFLAGS += $(shell pkg-config --cflags lua) $(shell pkg-config --cflags libzstd) $(shell pkg-config --cflags libcurl)
+LDFLAGS += $(shell pkg-config --libs-only-L lua) $(shell pkg-config --libs-only-L libzstd) $(shell pkg-config --libs-only-L libcurl)
+LDLIBS += $(shell pkg-config --libs-only-l lua) $(shell pkg-config --libs-only-l libzstd) $(shell pkg-config --libs-only-l libcurl)
 
-SRCS = srcs/BuildParse.c srcs/GetMeta.c srcs/main.c srcs/DoFullBuild.c srcs/Decompressor.c 
+SRCS = srcs/BuildParse.c srcs/GetMeta.c srcs/main.c srcs/DoFullBuild.c srcs/Decompressor.c srcs/Downloader.c
 OBJS := $(patsubst %.c,%.o,$(SRCS))
-DESTDIR ?= /opt/will/bin
+DESTDIR ?= /usr/local/bin
 
 $(OUT): $(OBJS)
 	$(CC) -o $@ $^ $(LDFLAGS) $(LDLIBS)

@@ -1,11 +1,6 @@
 #include "Common.h"
 
-void DoFullBuild(const char* argv1){
-    char *ext = strstr(argv1, ".zst");
-    if (ext && strcmp(ext, ".zst") == 0) {
-        *ext = '\0';  // Truncate string at start of ".zst"
-    }
-    const char* Filename = argv1;
+void DoFullBuild(const char* Filename){
     lua_State *l = luaL_newstate();
     luaL_openlibs(l);
     if (luaL_dofile(l, Filename) != LUA_OK) {

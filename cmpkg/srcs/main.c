@@ -1,16 +1,20 @@
 #include "Common.h"
+#include "Index.h"
 
 int main(int argc, char* argv[]){
     if (argc < 2){
-        fprintf(stderr, "Need filename\n");
+        fprintf(stderr, "Need pkg name\n");
         return 1;
     }
-    char* argv1 = strdup(argv[1]);
-    char *ext = strstr(argv1, ".zst");
-    if (ext && strcmp(ext, ".zst") == 0) {
-        *ext = '\0';  // Truncate string at start of ".zst"
+    int pkgindex = -1;
+    for (int i = 0; i < pkgsnum; i++){
+        if (strcmp(pkgs[i].name, argv[1]) == 0){
+            pkgindex = i;
+        }
     }
-    DecompressZst(argv[1], argv1);
-    DoFullBuild(argv[1]);
+
+    DownloadFile(pkgs[pkgindex].url, pkgs[pkgindex].urlbase);
+    DecompressZst(pkgs[pkgindex].urlbase, pkgs[pkgindex].oname);
+    DoFullBuild(pkgs[pkgindex].oname);
     return 0;
 }

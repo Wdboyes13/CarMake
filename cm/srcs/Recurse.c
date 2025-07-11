@@ -47,7 +47,7 @@ void MakeRecursiveMake(FILE* out, CM_Build* config){
     // Make SUBDIRS Variable
     fprintf(out, "SUBDIRS = ");
     for (int i = 0; i < config->RecurseInfo.subdirs->count; i++){
-        fprintf(out, "%s", config->RecurseInfo.subdirs->values[i]);
+        fprintf(out, "%s ", config->RecurseInfo.subdirs->values[i]);
     }
     
     // Build all subdirs
