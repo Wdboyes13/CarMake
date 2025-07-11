@@ -1,9 +1,10 @@
 local baseurl = "https://raw.githubusercontent.com/Wdboyes13/CarMake/master/cmpkgroot/comp/"
 
 function make_package(name)
+    local urlbase = name .. ".lua.zst"
     return {
         name = name,
-        urlbase = name .. ".lua.zst",
+        urlbase = urlbase,
         url = baseurl .. urlbase,
         oname = name .. ".lua"
     }
