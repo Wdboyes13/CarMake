@@ -26,6 +26,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <stdbool.h>
 #include <unistd.h>
 
+#define CM_VER "0.5.0"
+
 // Common Error Function
 static inline void error(const char *msg, const char *msg1) {
   fprintf(stderr, "ERROR: %s%s\n", msg, msg1 ? msg1 : "");

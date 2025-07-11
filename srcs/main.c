@@ -18,20 +18,47 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "Common.h"
 
+void PrintVer(){
+    printf("CarMake %s\n", CM_VER);
+    printf("Copyright (C) 2025 Wdboyes13\n");
+    printf("License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>\n");
+    printf("This is free software: you are free to change and redistribute it.\n");
+    printf("There is NO WARRANTY, to the extent permitted by law\n.");
+    exit(0);
+}
+
+void Usage(){
+    printf("Usage: cm [options]\n");
+    printf("Options:\n");
+    printf("    -f [filename]  - Set input file to [filename]\n");
+    printf("    -o [filename]  - Set output file to [filename]\n");
+    printf("    --run          - Immediatly Run Make After\n");
+    printf("    -v | --version - Print version\n");
+    printf("    -h | --help    - Print This\n");
+    exit(0);
+}
+
 int main(int argc, char* argv[]){
     char* file = "cm.toml";
     char* ofile = "Makefile";
+    bool dorun = false;
     for (int i = 1; i < argc; i++){
         if (strcmp(argv[i], "-f") == 0) file = argv[++i];
-        if (strcmp(argv[i], "-o") == 0) ofile = argv[++i];
-        else printf("Unknown Arguement: %s\n", argv[i]);
+        else if (strcmp(argv[i], "-o") == 0) ofile = argv[++i];
+        else if (strcmp(argv[i], "--run") == 0) dorun = true;
+        else if (strcmp(argv[i], "-v") == 0 || strcmp(argv[i], "--version") == 0) PrintVer();
+        else if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0) Usage();
+        else {
+            printf("Unknown Arguement: %s\n", argv[i]);
+            Usage();
+        }
     }
 
     toml_result_t result = toml_parse_file_ex(file);
     if (!result.ok){
         error(result.errmsg, 0);
     }
-    
+
     FILE* out = fopen(ofile, "w");
     if (!out) { error("Failed to create Makefile\n", 0); return 1; }
 
@@ -51,5 +78,9 @@ int main(int argc, char* argv[]){
     }
     if (config) free(config);
 
+    if (dorun) {
+        execlp("make", "make", NULL);
+        perror("Run Make Failed\n");
+    }
     return 0;
 }
