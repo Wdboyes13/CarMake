@@ -33,6 +33,7 @@ static inline void error(const char *msg, const char *msg1) {
 
 #define TYPE_E 0
 #define TYPE_A 2
+#define TYPE_R 1
 
 typedef struct {
     int count;
@@ -43,6 +44,7 @@ typedef struct CM_Build {
     char* name;
     enum {
         exec = TYPE_E,
+        recs = TYPE_R,
         alib = TYPE_A
     } type;
 

@@ -77,19 +77,19 @@ void buildwritefile(FILE* out, CM_Build* config){
     fprintf(out, "CFLAGS += %s\n", config->cflags);
     fprintf(out, "CPPFLAGS += ");
     for (int i = 0; i < config->includes->count; i++){
-        fprintf(out, "-I%s ", config->includes->values[i]);
+        fprintf(out, "$(pkg-config --cflags %s) ", config->includes->values[i]);
     }
     fprintf(out, "\n");
 
     fprintf(out, "LDFLAGS += ");
     for (int i = 0; i < config->ldirs->count; i++){
-        fprintf(out, "-L%s ", config->ldirs->values[i]);
+        fprintf(out, "$(pkg-config --libs-only-L %s) ", config->ldirs->values[i]);
     }
     fprintf(out, "\n");
 
     fprintf(out, "LDLIBS += ");
     for (int i = 0; i < config->libs->count; i++){
-        fprintf(out, "-l%s ", config->libs->values[i]);
+        fprintf(out, "$(pkg-config --libs-only-l %s) ", config->libs->values[i]);
     }
     fprintf(out, "\n\n");
 

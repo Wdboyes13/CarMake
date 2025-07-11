@@ -35,8 +35,10 @@ int main(int argc, char* argv[]){
     CM_Build* config = malloc(sizeof(CM_Build));
 
     pkgparse(out, result, config);
-    buildparse(out, result, config);
-    GenCommonRules(out, config);
+    if (config->type != recs){
+        buildparse(out, result, config);
+        GenCommonRules(out, config);
+    }
 
     if (config->includes) free(config->includes);
     if (config->ldirs) free(config->ldirs);

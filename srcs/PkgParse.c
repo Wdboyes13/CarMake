@@ -41,5 +41,10 @@ void pkgparse(FILE* out, toml_result_t result, CM_Build* config){
         fprintf(out, "OUT = %s.a\n", pkgname.u.s);
         config->name = (char*)pkgname.u.s;
         config->type = alib;    
-    } else { fclose(out); error("Unknown Package Type\n", 0); }
+    } 
+    else if (strcmp(pkgtype.u.s, "recurse") == 0){
+        config->name = (char*)pkgname.u.s;
+        config->type = recs;
+    }
+    else { fclose(out); error("Unknown Package Type\n", 0); }
 }
