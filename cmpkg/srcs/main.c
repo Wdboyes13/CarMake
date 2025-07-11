@@ -1,6 +1,15 @@
 #include "Common.h"
 #include "Index.h"
 
+void PrintInfo(const char* argv1){
+    printf("Installed %s to /opt/carmake\n", argv1);
+    printf("You may need to add /opt/carmake/lib/pkgconfig to PKG_CONFIG_PATH\n");
+    printf("Do this with 'export PKG_CONFIG_PATH=\"/opt/carmake/lib/pkgconfig:$PKG_CONFIG_PATH\"'\n");
+    printf("It is recommended to run the following as well\n");
+    printf("'export CPPFLAGS=\"-I/opt/carmake/include $CPPFLAGS\"'\n");
+    printf("'export LDFLAGS=\"-L/opt/carmake/lib $LDFLAGS\"'\n");
+}
+
 void ensure_dir(const char* path) {
     struct stat st;
     if (stat(path, &st) == 0) {
@@ -53,16 +62,17 @@ int main(int argc, char* argv[]) {
     ensure_dir(cachedir);
     chdir(cachedir);
 
+    if (access(pkgs[pkgindex].oname, F_OK)){
+        printf("This packge was already installed\n");
+        PrintInfo(argv[1]);
+        chdir(cwd);
+        return 0;
+    }
     DownloadFile(pkgs[pkgindex].url, pkgs[pkgindex].urlbase);
     DecompressZst(pkgs[pkgindex].urlbase, pkgs[pkgindex].oname);
     DoFullBuild(pkgs[pkgindex].oname);
 
     chdir(cwd);
-    printf("Installed %s to /opt/carmake\n", argv[1]);
-    printf("You may need to add /opt/carmake/lib/pkgconfig to PKG_CONFIG_PATH\n");
-    printf("Do this with 'export PKG_CONFIG_PATH=\"/opt/carmake/lib/pkgconfig:$PKG_CONFIG_PATH\"'\n");
-    printf("It is recommended to run the following as well\n");
-    printf("'export CPPFLAGS=\"-I/opt/carmake/include $CPPFLAGS\"'\n");
-    printf("'export LDFLAGS=\"-L/opt/carmake/lib $LDFLAGS\"'\n");
+    PrintInfo(argv[1]);
     return 0;
 }
