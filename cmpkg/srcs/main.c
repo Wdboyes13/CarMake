@@ -47,7 +47,7 @@ int main(int argc, char* argv[]) {
     }
     
     char cwd[PATH_MAX];
-    const char* ThisDir = getcwd(cwd, sizeof(cwd));
+    getcwd(cwd, sizeof(cwd));
     char cachedir[PATH_MAX];
     sprintf(cachedir, "%s/.cmpkg/cache", home);
     ensure_dir(cachedir);
