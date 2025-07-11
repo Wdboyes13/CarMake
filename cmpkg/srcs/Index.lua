@@ -28,5 +28,23 @@ pkgs = {
             name = "libiconv",
             oname = "libiconv.lua",
             urlbase = "libiconv.lua.zst"
+        },
+        {
+            url = "https://raw.githubusercontent.com/Wdboyes13/CarMake/master/cmpkgroot/comp/libcurl.lua.zst",
+            name = "libcurl",
+            oname = "libcurl.lua",
+            urlbase = "libcurl.lua.zst"
+        },
+        {
+            url = "https://raw.githubusercontent.com/Wdboyes13/CarMake/master/cmpkgroot/comp/lua.lua.zst",
+            name = "lua",
+            oname = "lua.lua",
+            urlbase = "lua.lua.zst"
+        },
+        {
+            url = "https://raw.githubusercontent.com/Wdboyes13/CarMake/master/cmpkgroot/comp/zstd.lua.zst",
+            name = "zstd",
+            oname = "zstd.lua",
+            urlbase = "zstd.lua.zst"
         }
 }
