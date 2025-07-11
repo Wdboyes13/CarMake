@@ -2,9 +2,9 @@ OUT = test1
 CC ?= clang
 
 CFLAGS += -O2 -Wall
-CPPFLAGS += $(pkg-config --cflags gmp) 
-LDFLAGS += $(pkg-config --libs-only-L gmp) 
-LDLIBS += $(pkg-config --libs-only-l gmp) 
+CPPFLAGS += $(shell pkg-config --cflags gmp) 
+LDFLAGS += $(shell pkg-config --libs-only-L gmp) 
+LDLIBS += $(shell pkg-config --libs-only-l gmp) 
 
 SRCS = main.c file2.c 
 OBJS := $(patsubst %.c,%.o,$(SRCS))
