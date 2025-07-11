@@ -61,6 +61,7 @@ typedef struct CM_Build {
         FlexArray* includes; // Include Directories
         FlexArray* ldirs; // Library Directories
         FlexArray* libs; // Libraries to link
+        FlexArray* ldflags; // Linker Flags
         FlexArray* sources; // Sources
     } BuildInfo; // Compiler/Linker Info
 

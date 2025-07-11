@@ -25,6 +25,7 @@ void buildvarparse(toml_result_t result, CM_Build* config){
     toml_datum_t libdirs = toml_seek(result.toptab, "build.libdirs");
     toml_datum_t libs = toml_seek(result.toptab, "build.libs");
     toml_datum_t srcs = toml_seek(result.toptab, "build.sources");
+    toml_datum_t ldflags = toml_seek(result.toptab, "build.ldflags");
 
     if (compiler.type != TOML_STRING){
         error("Build Compiler not a String\n", 0);
@@ -42,6 +43,7 @@ void buildvarparse(toml_result_t result, CM_Build* config){
     FillFlexArray(libdirs, BuildInfo.ldirs);
     FillFlexArray(libs, BuildInfo.libs);
     FillFlexArray(srcs, BuildInfo.sources);
+    FillFlexArray(ldflags, BuildInfo.ldflags);
 }
 
 void buildwritefile(FILE* out, CM_Build* config){
@@ -56,6 +58,9 @@ void buildwritefile(FILE* out, CM_Build* config){
     fprintf(out, "LDFLAGS += ");
     for (int i = 0; i < config->BuildInfo.ldirs->count; i++){
         fprintf(out, "$(shell pkg-config --libs-only-L %s) ", config->BuildInfo.ldirs->values[i]);
+    }
+    for (int i = 0; i < config->BuildInfo.ldflags->count; i++){
+        fprintf(out, "-Wl,%s ", config->BuildInfo.ldflags->values[i]);
     }
     fprintf(out, "\n");
 
