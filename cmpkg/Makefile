@@ -1,7 +1,7 @@
 OUT = cmpkg
 CC ?= wclang
 
-CFLAGS += 
+CFLAGS +=
 CPPFLAGS += $(shell pkg-config --cflags lua) $(shell pkg-config --cflags libzstd) $(shell pkg-config --cflags libcurl)
 LDFLAGS += $(shell pkg-config --libs-only-L lua) $(shell pkg-config --libs-only-L libzstd) $(shell pkg-config --libs-only-L libcurl)
 LDLIBS += $(shell pkg-config --libs-only-l lua) $(shell pkg-config --libs-only-l libzstd) $(shell pkg-config --libs-only-l libcurl)
