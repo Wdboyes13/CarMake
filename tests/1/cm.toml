@@ -1,0 +1,11 @@
+[package]
+name = "test1"
+type = "exec"
+
+[build]
+compiler = "clang"
+cflags = "-O2 -Wall"
+includes = ["/opt/will/include"]
+libdirs = ["/opt/will/lib"]
+libs = ["omp", "gmp"]
+sources = ["main.c", "file2.c"]
