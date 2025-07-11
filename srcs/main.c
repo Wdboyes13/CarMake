@@ -43,10 +43,14 @@ int main(int argc, char* argv[]){
     char* file = "cm.toml";
     char* ofile = "Makefile";
     bool dorun = false;
+    bool didswitch = false;
     for (int i = 1; i < argc; i++){
         if (strcmp(argv[i], "-f") == 0) file = argv[++i];
         else if (strcmp(argv[i], "-o") == 0) ofile = argv[++i];
-        else if (strcmp(argv[i], "-C") == 0) chdir(argv[++i]);
+        else if (strcmp(argv[i], "-C") == 0) {
+            chdir(argv[++i]);
+            didswitch = true;
+        }
         else if (strcmp(argv[i], "--run") == 0) dorun = true;
         else if (strcmp(argv[i], "-v") == 0 || strcmp(argv[i], "--version") == 0) PrintVer();
         else if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0) Usage();
@@ -83,6 +87,9 @@ int main(int argc, char* argv[]){
     if (dorun) {
         execlp("make", "make", NULL);
         perror("Run Make Failed\n");
+    }
+    if (didswitch){
+        chdir("..");
     }
     return 0;
 }
