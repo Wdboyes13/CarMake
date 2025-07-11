@@ -8,3 +8,7 @@ Lua / Liblua   - lua
 OpenSSL        - openssl 
 SDL2           - SDL2 
 ZStandard      - zstd
+GNU MP         - gmp
+GNU Nettle     - nettle
+TinyCC         - tinycc
+ZLib           - zlib
