@@ -28,44 +28,44 @@ void buildvarparse(toml_result_t result, CM_Build* config){
     toml_datum_t ldflags = toml_seek(result.toptab, "build.ldflags");
 
     if (compiler.type != TOML_STRING){
-        error("Build Compiler not a String\n", 0);
+        error("Build Compiler not found\n", 0);
     } else {
         config->BuildInfo.compiler = (char*)compiler.u.s;
     }
 
-    if (cflags.type != TOML_STRING){
-        error("CFlags not a String\n", 0);
-    } else {
-        config->BuildInfo.cflags = (char*)cflags.u.s;
-    }
+    if (cflags.type == TOML_STRING) {config->BuildInfo.cflags = (char*)cflags.u.s;} 
+    else {config->BuildInfo.cflags = ""; };
 
-    FillFlexArray(includes, BuildInfo.includes);
-    FillFlexArray(libdirs, BuildInfo.ldirs);
-    FillFlexArray(libs, BuildInfo.libs);
-    FillFlexArray(srcs, BuildInfo.sources);
-    FillFlexArray(ldflags, BuildInfo.ldflags);
+    if (compiler.type == TOML_ARRAY) FillFlexArray(includes, BuildInfo.includes);
+    if (libdirs.type == TOML_ARRAY)  FillFlexArray(libdirs, BuildInfo.ldirs);
+    if (libs.type == TOML_ARRAY)     FillFlexArray(libs, BuildInfo.libs);
+
+    if (srcs.type == TOML_ARRAY) {FillFlexArray(srcs, BuildInfo.sources);}
+    else error("Could not find sources\n", 0);
+
+    if (ldflags.type == TOML_ARRAY) FillFlexArray(ldflags, BuildInfo.ldflags);
 }
 
 void buildwritefile(FILE* out, CM_Build* config){
     fprintf(out, "CC ?= %s\n\n", config->BuildInfo.compiler);
-    fprintf(out, "CFLAGS += %s\n", config->BuildInfo.cflags);
+    if (config->BuildInfo.cflags) fprintf(out, "CFLAGS += %s\n", config->BuildInfo.cflags);
     fprintf(out, "CPPFLAGS += ");
-    for (int i = 0; i < config->BuildInfo.includes->count; i++){
+    if (config->BuildInfo.includes) for (int i = 0; i < config->BuildInfo.includes->count; i++){
         fprintf(out, "$(shell pkg-config --cflags %s) ", config->BuildInfo.includes->values[i]);
     }
     fprintf(out, "\n");
 
     fprintf(out, "LDFLAGS += ");
-    for (int i = 0; i < config->BuildInfo.ldirs->count; i++){
+    if (config->BuildInfo.ldirs) for (int i = 0; i < config->BuildInfo.ldirs->count; i++){
         fprintf(out, "$(shell pkg-config --libs-only-L %s) ", config->BuildInfo.ldirs->values[i]);
     }
-    for (int i = 0; i < config->BuildInfo.ldflags->count; i++){
+    if (config->BuildInfo.ldflags) for (int i = 0; i < config->BuildInfo.ldflags->count; i++){
         fprintf(out, "-Wl,%s ", config->BuildInfo.ldflags->values[i]);
     }
     fprintf(out, "\n");
 
     fprintf(out, "LDLIBS += ");
-    for (int i = 0; i < config->BuildInfo.libs->count; i++){
+    if (config->BuildInfo.libs) for (int i = 0; i < config->BuildInfo.libs->count; i++){
         fprintf(out, "$(shell pkg-config --libs-only-l %s) ", config->BuildInfo.libs->values[i]);
     }
     fprintf(out, "\n\n");

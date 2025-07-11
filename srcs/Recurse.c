@@ -40,6 +40,7 @@ void RecurseGen(CM_Build* config){
 void GetSubdirs(CM_Build* config, toml_result_t result){
     toml_datum_t subdirs = toml_seek(result.toptab, "package.subdirs");
     FillFlexArray(subdirs, RecurseInfo.subdirs);
+    if (!config->RecurseInfo.subdirs) error("Expecered package.subdirs", 0);
 }
 
 void MakeRecursiveMake(FILE* out, CM_Build* config){

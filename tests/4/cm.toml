@@ -1,0 +1,10 @@
+[package]
+name = "test2sub"
+type = "exec"
+installdir = "/usr/local/bin/"
+
+[build]
+compiler = "clang"
+sources = ["main.c"]
+cflags = "-O2 "
+ldflags = ["-rpath", "/opt/will/lib"]
