@@ -1,0 +1,6 @@
+[submodule "libsrcs/toml"]
+	path = libsrcs/toml
+	url = https://github.com/cktan/tomlc17.git
+[submodule "libsrcs/libsrcs/tomlc17"]
+	path = libsrcs/libsrcs/tomlc17
+	url = https://github.com/cktan/tomlc17.git
