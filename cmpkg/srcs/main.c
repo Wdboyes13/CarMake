@@ -62,7 +62,7 @@ int main(int argc, char* argv[]) {
     ensure_dir(cachedir);
     chdir(cachedir);
 
-    if (access(pkgs[pkgindex].oname, F_OK)){
+    if (access(pkgs[pkgindex].oname, F_OK) == 0){
         printf("This packge was already installed\n");
         PrintInfo(argv[1]);
         chdir(cwd);
