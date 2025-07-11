@@ -13,9 +13,9 @@ This system is
 __Requirements__  
 - `pkg-config`  
 - `install`  
-- libzstd  
-- liblua
-- libcurl  
+- [libzstd](https://github.com/facebook/zstd)   
+- [liblua 5.2.4](https://www.lua.org/ftp/lua-5.2.4.tar.gz)  
+- [libcurl](https://curl.se/download.html)     
   
 __To Build__  
 - First Clone this repo `git clone --depth 1 --recurse-submodules https://github.com/Wdboyes13/CarMake carmake`  
