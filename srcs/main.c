@@ -44,11 +44,13 @@ int main(int argc, char* argv[]){
     char* ofile = "Makefile";
     bool dorun = false;
     bool didswitch = false;
+    char* chdir_dir = NULL;
+
     for (int i = 1; i < argc; i++){
         if (strcmp(argv[i], "-f") == 0) file = argv[++i];
         else if (strcmp(argv[i], "-o") == 0) ofile = argv[++i];
         else if (strcmp(argv[i], "-C") == 0) {
-            chdir(argv[++i]);
+            chdir_dir = argv[++i];
             didswitch = true;
         }
         else if (strcmp(argv[i], "--run") == 0) dorun = true;
@@ -57,6 +59,13 @@ int main(int argc, char* argv[]){
         else {
             printf("Unknown Arguement: %s\n", argv[i]);
             Usage();
+        }
+    }
+
+    if (chdir_dir) {
+        if (chdir(chdir_dir) != 0) {
+            perror("Failed to chdir");
+            return 1;
         }
     }
 
@@ -84,9 +93,11 @@ int main(int argc, char* argv[]){
     }
     if (config) free(config);
 
+    fclose(out);
     if (dorun) {
         execlp("make", "make", NULL);
         perror("Run Make Failed\n");
+        return 1;
     }
     if (didswitch){
         chdir("..");
