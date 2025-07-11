@@ -22,29 +22,25 @@ void pkgparse(FILE* out, toml_result_t result, CM_Build* config){
     // Get package metadata
     toml_datum_t pkgname = toml_seek(result.toptab, "package.name");
     toml_datum_t pkgtype = toml_seek(result.toptab, "package.type");
+    toml_datum_t installpath = toml_seek(result.toptab, "package.installdir");
 
     // Check type
-    if (pkgname.type != TOML_STRING){
-        error("Missing package.name\n", 0);
-    }
-    if (pkgtype.type != TOML_STRING){
-        error("Missing package.type\n", 0);
+    if (pkgname.type != TOML_STRING) error("Missing package.name\n", 0);
+    if (pkgtype.type != TOML_STRING) error("Missing package.type\n", 0);
+
+    // Set Package Type In Config
+    if (strcmp(pkgtype.u.s, "exec") == 0) config->PkgInfo.type = exec;
+    else if (strcmp(pkgtype.u.s, "alib") == 0) config->PkgInfo.type = alib;    
+    else if (strcmp(pkgtype.u.s, "recurse") == 0) config->PkgInfo.type = recs;
+    else { fclose(out); error("Unknown Package Type\n", 0); }
+
+    // Write other stuff
+    config->PkgInfo.name = (char*)pkgname.u.s;
+
+    if (config->PkgInfo.type != recs){
+        if (installpath.type != TOML_STRING) error("Missing package.installdir\n", 0);
+        config->PkgInfo.installdir = (char*)installpath.u.s;
     }
 
-    // Write Output Name
-    if (strcmp(pkgtype.u.s, "exec") == 0) { 
-        fprintf(out, "OUT = %s\n", pkgname.u.s); 
-        config->name = (char*)pkgname.u.s;
-        config->type = exec;
-    }
-    else if (strcmp(pkgtype.u.s, "alib") == 0) { 
-        fprintf(out, "OUT = %s.a\n", pkgname.u.s);
-        config->name = (char*)pkgname.u.s;
-        config->type = alib;    
-    } 
-    else if (strcmp(pkgtype.u.s, "recurse") == 0){
-        config->name = (char*)pkgname.u.s;
-        config->type = recs;
-    }
-    else { fclose(out); error("Unknown Package Type\n", 0); }
+    if (config->PkgInfo.type != recs) fprintf(out, "OUT = %s\n", pkgname.u.s);
 }

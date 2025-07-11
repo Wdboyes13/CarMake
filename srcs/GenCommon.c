@@ -21,11 +21,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 void GenCommonRules(FILE* out, CM_Build* config){
     // Common Variables
     fprintf(out, "OBJS := $(patsubst %%.c,%%.o,$(SRCS))\n");
-    fprintf(out, "DESTDIR ?= /usr/local/bin\n\n");
+    fprintf(out, "DESTDIR ?= %s\n\n", config->PkgInfo.installdir);
 
     // Linking Rule
     fprintf(out, "$(OUT): $(OBJS)\n");
-    if (config->type == alib) fprintf(out, "\tar rcs $@ $^\n\n");
+    if (config->PkgInfo.type == alib) fprintf(out, "\tar rcs $@ $^\n\n");
     else fprintf(out, "\t$(CC) -o $@ $^ $(LDFLAGS) $(LDLIBS)\n\n");
 
     // Compiling Rule

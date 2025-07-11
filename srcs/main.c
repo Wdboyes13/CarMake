@@ -20,8 +20,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 int main(int argc, char* argv[]){
     char* file = "cm.toml";
+    char* ofile = "Makefile";
     for (int i = 1; i < argc; i++){
         if (strcmp(argv[i], "-f") == 0) file = argv[++i];
+        if (strcmp(argv[i], "-o") == 0) ofile = argv[++i];
         else printf("Unknown Arguement: %s\n", argv[i]);
     }
 
@@ -29,21 +31,24 @@ int main(int argc, char* argv[]){
     if (!result.ok){
         error(result.errmsg, 0);
     }
-    FILE* out = fopen("Makefile", "w");
+    
+    FILE* out = fopen(ofile, "w");
     if (!out) { error("Failed to create Makefile\n", 0); return 1; }
 
     CM_Build* config = malloc(sizeof(CM_Build));
 
     pkgparse(out, result, config);
-    if (config->type != recs){
+    if (config->PkgInfo.type != recs){
         buildparse(out, result, config);
         GenCommonRules(out, config);
+        if (config->BuildInfo.includes) free(config->BuildInfo.includes);
+        if (config->BuildInfo.ldirs) free(config->BuildInfo.ldirs);
+        if (config->BuildInfo.libs) free(config->BuildInfo.libs);
+        if (config->BuildInfo.sources) free(config->BuildInfo.sources);
+    } else {
+        GenRecurseBuild(out, result, config);
+        if (config->RecurseInfo.subdirs) free (config->RecurseInfo.subdirs);
     }
-
-    if (config->includes) free(config->includes);
-    if (config->ldirs) free(config->ldirs);
-    if (config->libs) free(config->libs);
-    if (config->sources) free(config->sources);
     if (config) free(config);
 
     return 0;

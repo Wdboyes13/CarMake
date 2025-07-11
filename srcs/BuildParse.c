@@ -18,34 +18,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "Common.h"
 
-#define FillFlexArray(datumt, field)                                       \
-    if (check_toml_string_array(datumt)) {                                 \
-        config->field = malloc(sizeof(FlexArray) +                          \
-                              sizeof(char*) * datumt.u.arr.size);         \
-        if (!config->field) error("Failed to allocate " #field "\n", 0);   \
-        config->field->count = datumt.u.arr.size;                           \
-        for (int i = 0; i < datumt.u.arr.size; i++) {                      \
-            const char* toml_str = datumt.u.arr.elem[i].u.s;              \
-            config->field->values[i] = strdup(toml_str);                    \
-            if (!config->field->values[i])                                  \
-                error("strdup failed for " #field "[%d]\n", 0);           \
-        }                                                                  \
-    }
-
-
-bool check_toml_string_array(toml_datum_t array){
-    if (array.type != TOML_ARRAY){
-        return false;
-    }
-    for (int i = 0; i < array.u.arr.size; i++){
-        toml_datum_t elem = array.u.arr.elem[i];
-        if (elem.type != TOML_STRING){
-            return false;
-        }
-    }
-    return true;
-}
-
 void buildvarparse(toml_result_t result, CM_Build* config){
     toml_datum_t compiler = toml_seek(result.toptab, "build.compiler");
     toml_datum_t cflags   = toml_seek(result.toptab, "build.cflags");
@@ -57,45 +29,45 @@ void buildvarparse(toml_result_t result, CM_Build* config){
     if (compiler.type != TOML_STRING){
         error("Build Compiler not a String\n", 0);
     } else {
-        config->compiler = (char*)compiler.u.s;
+        config->BuildInfo.compiler = (char*)compiler.u.s;
     }
 
     if (cflags.type != TOML_STRING){
         error("CFlags not a String\n", 0);
     } else {
-        config->cflags = (char*)cflags.u.s;
+        config->BuildInfo.cflags = (char*)cflags.u.s;
     }
 
-    FillFlexArray(includes, includes);
-    FillFlexArray(libdirs, ldirs);
-    FillFlexArray(libs, libs);
-    FillFlexArray(srcs, sources);
+    FillFlexArray(includes, BuildInfo.includes);
+    FillFlexArray(libdirs, BuildInfo.ldirs);
+    FillFlexArray(libs, BuildInfo.libs);
+    FillFlexArray(srcs, BuildInfo.sources);
 }
 
 void buildwritefile(FILE* out, CM_Build* config){
-    fprintf(out, "CC ?= %s\n\n", config->compiler);
-    fprintf(out, "CFLAGS += %s\n", config->cflags);
+    fprintf(out, "CC ?= %s\n\n", config->BuildInfo.compiler);
+    fprintf(out, "CFLAGS += %s\n", config->BuildInfo.cflags);
     fprintf(out, "CPPFLAGS += ");
-    for (int i = 0; i < config->includes->count; i++){
-        fprintf(out, "$(shell pkg-config --cflags %s) ", config->includes->values[i]);
+    for (int i = 0; i < config->BuildInfo.includes->count; i++){
+        fprintf(out, "$(shell pkg-config --cflags %s) ", config->BuildInfo.includes->values[i]);
     }
     fprintf(out, "\n");
 
     fprintf(out, "LDFLAGS += ");
-    for (int i = 0; i < config->ldirs->count; i++){
-        fprintf(out, "$(shell pkg-config --libs-only-L %s) ", config->ldirs->values[i]);
+    for (int i = 0; i < config->BuildInfo.ldirs->count; i++){
+        fprintf(out, "$(shell pkg-config --libs-only-L %s) ", config->BuildInfo.ldirs->values[i]);
     }
     fprintf(out, "\n");
 
     fprintf(out, "LDLIBS += ");
-    for (int i = 0; i < config->libs->count; i++){
-        fprintf(out, "$(shell pkg-config --libs-only-l %s) ", config->libs->values[i]);
+    for (int i = 0; i < config->BuildInfo.libs->count; i++){
+        fprintf(out, "$(shell pkg-config --libs-only-l %s) ", config->BuildInfo.libs->values[i]);
     }
     fprintf(out, "\n\n");
 
     fprintf(out, "SRCS = ");
-    for (int i = 0; i < config->sources->count; i++){
-        fprintf(out, "%s ", config->sources->values[i]);
+    for (int i = 0; i < config->BuildInfo.sources->count; i++){
+        fprintf(out, "%s ", config->BuildInfo.sources->values[i]);
     }
     fprintf(out, "\n");
 }
