@@ -1,5 +1,5 @@
 [package]
-name = "test2sub"
+name = "test3"
 type = "exec"
 installdir = "/usr/local/bin/"
 

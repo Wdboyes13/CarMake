@@ -5,8 +5,8 @@ __And so the name, is Cargo + Make - CarMake__
 __This system is undocumented currently, since it was made only for my projects__  
 
 ## To get  
-- You will need `pkg-config` to use it, since generated files rely on it  
-- First Clone this repo `git clone --depth 1 https://github.com/Wdboyes13/CarMake carmake`  
+- You will need `pkg-config` & `install` to use it, since generated files rely on it  
+- First Clone this repo `git clone --depth 1 --recurse-submodules https://github.com/Wdboyes13/CarMake carmake`  
 - Then do `cd carmake`  
 - Then build with `make`  
 - And install with `make install` optionally provide `DESTDIR=[YourDir]` to change the install dir, replacing `[YourDir]` with where you want it  
