@@ -25,9 +25,9 @@ int main(int argc, char* argv[]) {
         return 1;
     }
     const char* home = getenv("HOME");
-    char* indexdir;
+    char indexdir[PATH_MAX];
     sprintf(indexdir, "%s/.cmpkg/", home);
-    char* indexpath;
+    char indexpath[PATH_MAX];
     sprintf(indexpath, "%s/.cmpkg/packages.lua", home);
     ensure_dir(indexdir);
     DownloadFile("https://raw.githubusercontent.com/Wdboyes13/CarMake/master/cmpkg/srcs/Index.lua", indexpath);
@@ -45,9 +45,18 @@ int main(int argc, char* argv[]) {
         fprintf(stderr, "Package '%s' not found\n", argv[1]);
         return 1;
     }
+    
+    char cwd[PATH_MAX];
+    const char* ThisDir = getcwd(cwd, sizeof(cwd));
+    char cachedir[PATH_MAX];
+    sprintf(cachedir, "%s/.cmpkg/cache", home);
+    ensure_dir(cachedir);
+    chdir(cachedir);
 
     DownloadFile(pkgs[pkgindex].url, pkgs[pkgindex].urlbase);
     DecompressZst(pkgs[pkgindex].urlbase, pkgs[pkgindex].oname);
     DoFullBuild(pkgs[pkgindex].oname);
+
+    chdir(cwd);
     return 0;
 }
