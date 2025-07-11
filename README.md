@@ -30,4 +30,4 @@ __[libtomlc17 License](/libsrcs/tomlc17/LICENSE)__
 
 ## To Use  
 If you wan't to use `cm` in your own projects, check out [tests](/tests) until I document it  
-To use `cmpkg` do `cmpkg [packagename]`
+To use `cmpkg` do `cmpkg [packagename]` Available packages can be find at [Packages.txt](/cmpkgroot/Packages.txt)  
