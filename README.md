@@ -1,8 +1,13 @@
 # This is CarMake  
 __This system was built to be as simple as possible, and generate Makefiles how I would write them__  
 __I got the idea, because I liked the simplicity of Rust's `cargo`__  
-__And so the name, is Cargo + Make - CarMake__  
+__And so the name, is Cargo + Make = CarMake__  
 __This system is undocumented currently, since it was made only for my projects__  
+
+## What it is
+This system is  
+- A `Makefile` Generator (`cm`)  
+- and a C Package Manager (`cmpkg`)    
 
 ## To get  
 __Requirements__  
