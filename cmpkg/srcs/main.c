@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
     sprintf(indexpath, "%s/.cmpkg/packages.lua", home);
     ensure_dir(indexdir);
     DownloadFile("https://raw.githubusercontent.com/Wdboyes13/CarMake/master/cmpkg/srcs/Index.lua", indexpath);
-    LoadPackageIndex("packages.lua");
+    LoadPackageIndex(indexpath);
 
     int pkgindex = -1;
     for (int i = 0; i < pkgsnum; i++) {
@@ -58,5 +58,11 @@ int main(int argc, char* argv[]) {
     DoFullBuild(pkgs[pkgindex].oname);
 
     chdir(cwd);
+    printf("Installed %s to /opt/carmake\n", argv[1]);
+    printf("You may need to add /opt/carmake/lib/pkgconfig to PKG_CONFIG_PATH\n");
+    printf("Do this with 'export PKG_CONFIG_PATH=\"/opt/carmake/lib/pkgconfig:$PKG_CONFIG_PATH\"'\n");
+    printf("It is recommended to run the following as well\n");
+    printf("'export CPPFLAGS=\"-I/opt/carmake/include $CPPFLAGS\"'\n");
+    printf("'export LDFLAGS=\"-L/opt/carmake/lib $LDFLAGS\"'\n");
     return 0;
 }
