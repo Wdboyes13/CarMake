@@ -1,12 +1,36 @@
 #include "Common.h"
 #include "Index.h"
 
+void ensure_dir(const char* path) {
+    struct stat st;
+    if (stat(path, &st) == 0) {
+        if (S_ISDIR(st.st_mode)) {
+            printf("Directory '%s' exists.\n", path);
+        } else {
+            printf("'%s' exists but is not a directory!\n", path);
+        }
+    } else {
+        // Directory doesn't exist, create it
+        if (mkdir(path, 0755) == 0) {
+            printf("Created directory '%s'\n", path);
+        } else {
+            perror("mkdir failed");
+        }
+    }
+}
+
 int main(int argc, char* argv[]) {
     if (argc < 2) {
         fprintf(stderr, "Need pkg name\n");
         return 1;
     }
-    DownloadFile("https://raw.githubusercontent.com/Wdboyes13/CarMake/master/cmpkg/srcs/Index.lua", "packages.lua");
+    const char* home = getenv("HOME");
+    char* indexdir;
+    sprintf(indexdir, "%s/.cmpkg/", home);
+    char* indexpath;
+    sprintf(indexpath, "%s/.cmpkg/packages.lua", home);
+    ensure_dir(indexdir);
+    DownloadFile("https://raw.githubusercontent.com/Wdboyes13/CarMake/master/cmpkg/srcs/Index.lua", indexpath);
     LoadPackageIndex("packages.lua");
 
     int pkgindex = -1;
