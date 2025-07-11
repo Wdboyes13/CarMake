@@ -9,10 +9,10 @@ __Requirements__
 - `pkg-config`  
 - `install`  
 - libzstd  
-- liblua  
-
-
-- You will need `pkg-config` & `install` to use it - For cmpkg you need `libzstd` and `liblua`, since generated files rely on it  
+- liblua
+- libcurl  
+  
+__To Build__  
 - First Clone this repo `git clone --depth 1 --recurse-submodules https://github.com/Wdboyes13/CarMake carmake`  
 - Then do `cd carmake`  
 - Then build with `make`  
