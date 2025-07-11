@@ -5,7 +5,7 @@ type = "exec"
 [build]
 compiler = "clang"
 cflags = "-O2 -Wall"
-includes = ["/opt/will/include"]
-libdirs = ["/opt/will/lib"]
-libs = ["omp", "gmp"]
+includes = ["gmp"]
+libdirs = ["gmp"]
+libs = ["gmp"]
 sources = ["main.c", "file2.c"]
