@@ -2,7 +2,8 @@
 __This system was built to be as simple as possible__  
 __This system is undocumented currently, since it was made only for my projects__  
 
-## To get
+## To get  
+- You will need `pkg-config` to use it, since generated files rely on it  
 - First Clone this repo `git clone --depth 1 https://github.com/Wdboyes13/CarMake carmake`  
 - Then do `cd carmake`  
 - Then build with `make`  
