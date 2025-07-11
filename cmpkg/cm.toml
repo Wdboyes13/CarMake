@@ -1,0 +1,11 @@
+[package]
+name = "cmpkg"
+type = "exec"
+installdir = "/opt/will/bin"
+
+[build]
+compiler = "wclang"
+includes = ["lua", "libzstd"]
+libdirs = ["lua", "libzstd"]
+libs = ["lua", "libzstd"]
+sources = ["srcs/BuildParse.c", "srcs/GetMeta.c", "srcs/main.c", "srcs/DoFullBuild.c", "srcs/Decompressor.c"]
