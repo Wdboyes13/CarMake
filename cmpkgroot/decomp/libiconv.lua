@@ -1,13 +1,13 @@
-srclink = "https://ftp.gnu.org/gnu/libmicrohttpd/libmicrohttpd-1.0.1.tar.gz"
-archname = "libmicrohttpd-1.0.1.tar.gz"
-dirname = "libmicrohttpd-1.0.1"
+srclink = "https://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.18.tar.gz"
+archname = "libiconv-1.18.tar.gz"
+dirname = "libiconv-1.18"
 
 opts = "--prefix=/opt/carmake/ "
 
 package = {
-    name = "libmicrohttpd",
-    license = "LGPL v2.1",
-    version = "1.0.1",
+    name = "libiconv",
+    license = "GPL v3",
+    version = "1.18",
     author  = "gnu"
 }
 
