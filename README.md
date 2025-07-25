@@ -4,12 +4,13 @@ __I got the idea, because I liked the simplicity of Rust's `cargo`__
 __And so the name, is Cargo + Make = CarMake__  
 __This system is undocumented currently, since it was made only for my projects__  
 
+__Lines followed by !W! - means incompatible with Windows__  
 ## What it is
 This system is  
 - A `Makefile` Generator (`cm`)  
 - A C Package Manager (`cmpkg`)    
-- A test suite executor & Git Integrator (`repotool`)  
-- And a dynamic library creator tool (`sotool`)  
+- A test suite executor & Git Integrator (`repotool`) !W!  
+- And a dynamic library creator tool (`sotool`) !W!  
 
 ## To get  
 __Requirements__  
@@ -34,5 +35,5 @@ __[libtomlc17 License](/libsrcs/tomlc17/LICENSE)__
 ## To Use  
 If you wan't to use `cm` in your own projects, check out [tests](/cm/tests) until I document it  
 To use `cmpkg` do `cmpkg [packagename]` Available packages can be find at [Packages.txt](/cmpkgroot/Packages.txt)  
-If you want to us `sotool` in your own projects, get info with `sotool -h`  
-If you want to use `repotool` look in [tests](/repotool/tests)
+If you want to us `sotool` in your own projects, get info with `sotool -h` !W!   ddd
+If you want to use `repotool` look in [tests](/repotool/tests) !W!  
