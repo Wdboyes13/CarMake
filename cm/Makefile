@@ -9,9 +9,9 @@ OBJS := $(patsubst %.c,%.o,$(SRCS))
 DESTDIR = /usr/local/bin/
 REQLIBS = lib/libtomlc17.a
 
-all: $(REQLIBS) $(OUT)
+all: $(OUT)
 
-$(OUT): $(OBJS)
+$(OUT): $(OBJS) $(REQLIBS)
 	@echo "[LD] $@"
 	@$(CC) -o $@ $^ $(LDFLAGS) $(LDLIBS)
 %.o: %.c 
