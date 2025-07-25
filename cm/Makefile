@@ -12,20 +12,24 @@ REQLIBS = lib/libtomlc17.a
 all: $(REQLIBS) $(OUT)
 
 $(OUT): $(OBJS)
-	$(CC) -o $@ $^ $(LDFLAGS) $(LDLIBS)
+	@echo "[LD] $@"
+	@$(CC) -o $@ $^ $(LDFLAGS) $(LDLIBS)
 %.o: %.c 
-	$(CC) -o $@ -c $< $(CFLAGS) $(CPPFLAGS)
+	@echo "[CC] $<"
+	@$(CC) -o $@ -c $< $(CFLAGS) $(CPPFLAGS)
 
 $(REQLIBS):
-	$(MAKE) -C libsrcs/tomlc17/src libtomlc17.a || exit 1
+	@$(MAKE) -C libsrcs/tomlc17/src libtomlc17.a > /dev/null 2>&1 || exit 1
 	cp libsrcs/tomlc17/src/libtomlc17.a ./lib/
 
 clean:
-	rm -f $(OUT) $(REQLIBS) $(OBJS)
-	$(MAKE) -C libsrcs/tomlc17/src clean
+	@echo "[RM] $(OUT) $(REQLIBS) $(OBJS)"
+	@rm -f $(OUT) $(REQLIBS) $(OBJS)
+	@$(MAKE) -C libsrcs/tomlc17/ clean > /dev/null 2>&1 || exit 1
 
 install: $(OUT)
-	install -d -m 755 $(DESTDIR)
-	install -m 755 $(OUT) $(DESTDIR)/$(OUT)
+	@install -d -m 755 $(DESTDIR)
+	@echo "[INSTALL] $(OUT)"
+	@install -m 755 $(OUT) $(DESTDIR)/$(OUT)
 
 .PHONY: all clean install

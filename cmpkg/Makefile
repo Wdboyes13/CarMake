@@ -11,16 +11,20 @@ OBJS := $(patsubst %.c,%.o,$(SRCS))
 DESTDIR ?= /usr/local/bin
 
 $(OUT): $(OBJS)
-	$(CC) -o $@ $^ $(LDFLAGS) $(LDLIBS)
+	@echo "[LD] $@"
+	@$(CC) -o $@ $^ $(LDFLAGS) $(LDLIBS)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -o $@ -c $< $(CPPFLAGS)
+	@echo "[CC] $<"
+	@$(CC) $(CFLAGS) -o $@ -c $< $(CPPFLAGS)
 
 clean:
-	rm -f $(OBJS) $(OUT)
+	@echo "[RM] $(OBJS) $(OUT)"
+	@rm -f $(OBJS) $(OUT)
 
 install: $(OUT)
-	install -d -m 755 $(DESTDIR)
-	install -m 755 $(OUT) $(DESTDIR)/$(OUT)
+	@install -d -m 755 $(DESTDIR)
+	@echo "[INSTALL] $(OUT)"
+	@install -m 755 $(OUT) $(DESTDIR)/$(OUT)
 
 .PHONY: install clean

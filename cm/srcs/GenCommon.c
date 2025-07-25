@@ -25,21 +25,25 @@ void GenCommonRules(FILE* out, CM_Build* config){
 
     // Linking Rule
     fprintf(out, "$(OUT): $(OBJS)\n");
-    if (config->PkgInfo.type == alib) fprintf(out, "\tar rcs $@ $^\n\n");
-    else fprintf(out, "\t$(CC) -o $@ $^ $(LDFLAGS) $(LDLIBS)\n\n");
+    fprintf(out, "\t@echo \"[LD] $@\"\n");
+    if (config->PkgInfo.type == alib) fprintf(out, "\t@ar rcs $@ $^\n\n");
+    else fprintf(out, "\t@$(CC) -o $@ $^ $(LDFLAGS) $(LDLIBS)\n\n");
 
     // Compiling Rule
     fprintf(out, "%%.o: %%.c\n");
-    fprintf(out, "\t$(CC) $(CFLAGS) -o $@ -c $< $(CPPFLAGS)\n\n");
+    fprintf(out, "\t@echo \"[CC] $<\"\n");
+    fprintf(out, "\t@$(CC) $(CFLAGS) -o $@ -c $< $(CPPFLAGS)\n\n");
 
     // Clean Rule
     fprintf(out, "clean:\n");
-    fprintf(out, "\trm -f $(OBJS) $(OUT)\n\n");
+    fprintf(out, "\t@echo \"[RM] $(OBJS) $(OUT)\"\n");
+    fprintf(out, "\t@rm -f $(OBJS) $(OUT)\n\n");
 
     // Install Rule
     fprintf(out, "install: $(OUT)\n");
-    fprintf(out, "\tinstall -d -m 755 $(DESTDIR)\n");
-    fprintf(out, "\tinstall -m 755 $(OUT) $(DESTDIR)/$(OUT)\n\n");
+    fprintf(out, "\t@install -d -m 755 $(DESTDIR)\n");
+    fprintf(out, "\t@echo \"[INSTALL] $(OUT)\"\n");
+    fprintf(out, "\t@install -m 755 $(OUT) $(DESTDIR)/$(OUT)\n\n");
 
     // Mark install & clean as .PHONY
     fprintf(out, ".PHONY: install clean\n");
