@@ -39,3 +39,6 @@ void DoFullBuild(const char* argv1);
 int DecompressZst(const char* in_path, const char* out_path);
 void DownloadFile(const char* url, const char* out);
 void LoadPackageIndex(const char* filename);
+void ClearCache();
+
+void ensure_dir(const char* path);

@@ -17,6 +17,5 @@ build = {
     "make",
     "sudo make install",
     "cd ..",
-    "rm -rf " .. dirname,
-    "rm -f " .. archname 
+    "rm -rf " .. dirname
 }

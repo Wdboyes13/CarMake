@@ -48,9 +48,10 @@ void ensure_dir(const char* path) {
 
 int main(int argc, char* argv[]) {
     if (argc < 2) {
-        fprintf(stderr, "Need pkg name\n");
+        fprintf(stderr, "Need pkg name, or --clearcache\n");
         return 1;
     }
+    if (strcmp(argv[1], "--clearcache") == 0) ClearCache();
     const char* home = getenv("HOME");
     char indexdir[PATH_MAX];
     sprintf(indexdir, "%s/.cmpkg/", home);
