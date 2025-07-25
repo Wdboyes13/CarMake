@@ -35,4 +35,4 @@ __[libtomlc17 License](/libsrcs/tomlc17/LICENSE)__
 If you wan't to use `cm` in your own projects, check out [tests](/cm/tests) until I document it  
 To use `cmpkg` do `cmpkg [packagename]` Available packages can be find at [Packages.txt](/cmpkgroot/Packages.txt)  
 If you want to us `sotool` in your own projects, get info with `sotool -h`  
-If you want to use `repotool`  Please note it is WIP, and untested, but look in [tests](/repotool/tests)
+If you want to use `repotool` look in [tests](/repotool/tests)
