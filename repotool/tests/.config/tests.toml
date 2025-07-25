@@ -1,0 +1,9 @@
+[GitInfo]
+AuthName = "Wdboyes13"
+AuthMail = "willdev2025@outlook.com"
+RemName = "origin"
+LocName = "main"
+
+[TestInfo]
+TestFolderPath = "Tests"
+TestNames = ["test1.sh", "test2.sh"]

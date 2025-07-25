@@ -1,4 +1,4 @@
-SUBDIRS = cm cmpkg
+SUBDIRS = cm cmpkg sotool repotool
 
 ifeq ($(INT),1)
 build:

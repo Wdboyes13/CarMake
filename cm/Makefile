@@ -1,8 +1,8 @@
 CC ?= clang
-CPPFLAGS += -I./include
+CPPFLAGS = -I./include
 CFLAGS += -O2
-LDFLAGS += -L./lib
-LDLIBS += -ltomlc17
+LDFLAGS = -L./lib
+LDLIBS = -ltomlc17
 SRCS = srcs/BuildParse.c srcs/main.c srcs/PkgParse.c srcs/GenCommon.c srcs/Recurse.c
 OUT = cm
 OBJS := $(patsubst %.c,%.o,$(SRCS))

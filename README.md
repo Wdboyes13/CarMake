@@ -7,7 +7,9 @@ __This system is undocumented currently, since it was made only for my projects_
 ## What it is
 This system is  
 - A `Makefile` Generator (`cm`)  
-- and a C Package Manager (`cmpkg`)    
+- A C Package Manager (`cmpkg`)    
+- A test suite executor & Git Integrator (`repotool`)  
+- And a dynamic library creator tool (`sotool`)  
 
 ## To get  
 __Requirements__  
@@ -16,6 +18,7 @@ __Requirements__
 - [libzstd](https://github.com/facebook/zstd)   
 - [liblua 5.2.4](https://www.lua.org/ftp/lua-5.2.4.tar.gz)  
 - [libcurl](https://curl.se/download.html)     
+- [libgit2](https://libgit2.org/)  
   
 __To Build__  
 - First Clone this repo `git clone --depth 1 --recurse-submodules https://github.com/Wdboyes13/CarMake carmake`  
@@ -29,5 +32,7 @@ __[Short License](/Fileheader.txt)__
 __[libtomlc17 License](/libsrcs/tomlc17/LICENSE)__  
 
 ## To Use  
-If you wan't to use `cm` in your own projects, check out [tests](/tests) until I document it  
+If you wan't to use `cm` in your own projects, check out [tests](/cm/tests) until I document it  
 To use `cmpkg` do `cmpkg [packagename]` Available packages can be find at [Packages.txt](/cmpkgroot/Packages.txt)  
+If you want to us `sotool` in your own projects, get info with `sotool -h`  
+If you want to use `repotool`  Please note it is WIP, and untested, but look in [tests](/repotool/tests)
