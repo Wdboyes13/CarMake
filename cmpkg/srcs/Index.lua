@@ -22,5 +22,6 @@ pkgs = {
         make_package("gmp"), 
         make_package("nettle"),
         make_package("tinycc"),
-        make_package("zlib")
+        make_package("zlib"),
+        make_package("aubio")
 }
